@@ -16,7 +16,7 @@ const getSingleBike = async (id: string) => {
     return result
 }
 const updateBike = async (id: string, doc: Partial<IProduct>) => {
-    const result = await Product.findByIdAndUpdate(id, doc,{new:true})
+    const result = await Product.findByIdAndUpdate(id, doc, { new: true })
     return result
 }
 const deleteBike = async (id: string) => {
