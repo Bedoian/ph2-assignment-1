@@ -2,8 +2,6 @@ import { Request, Response } from "express";
 import { orderService } from "./order.service";
 import Product from "../products/product.model";
 import mongoose from "mongoose";
-
-
 const createOrder = async (req: Request, res: Response) => {
     try {
         const payload = req.body
@@ -23,7 +21,6 @@ const createOrder = async (req: Request, res: Response) => {
                 message: `Insufficient stocks, We only have ${product[0].quantity} to sell`,
                 success: false,
             })
-
         }
         await Product.findByIdAndUpdate(
             payload.product,
@@ -53,7 +50,7 @@ const orderAggregate = async (req: Request, res: Response) => {
         const result = await orderService.getOrderAggregate()
         const total = result[0].totalRevenue
         res.status(201).json({
-            message: 'Aggregation done successfully ',
+            message: 'Revenue calculated successfully',
             success: true,
             data: {
                 totalRevenue: total
@@ -70,8 +67,6 @@ const orderAggregate = async (req: Request, res: Response) => {
         console.log(err);
     }
 }
-
-
 export const orderControll = {
     createOrder,
     orderAggregate

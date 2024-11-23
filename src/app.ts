@@ -6,7 +6,7 @@ const app = express()
 app.use(express.json())
 
 // router defination
-app.use('/api/product',productRouter)
+app.use('/api/products',productRouter)
 app.use('/api/orders',orderRouter)
 
 app.get('/', async (req: Request, res: Response) => {

@@ -21,6 +21,7 @@ const productSchema = new Schema({
     },
     category: {
         type: String,
+        enum: {values:[' Mountain', 'Road', 'Hybrid', 'Electric'],message:`{VALUE} is not a valid categoy! please provide valid one`},
         required: true,
         trim: true
     },

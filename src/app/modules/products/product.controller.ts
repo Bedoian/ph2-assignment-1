@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
 import { productService } from "./product.service"
-
-
 const createBike = async (req: Request, res: Response) => {
     try {
         const payload = req.body
@@ -26,7 +24,7 @@ const getAllBikes = async (req: Request, res: Response) => {
     try {
         const result = await productService.getAllBikes()
         res.json({
-            message: 'Bikes loaded successfully',
+            message: 'Bikes retrieved successfully',
             success: true,
             data: result,
         })
@@ -43,10 +41,10 @@ const getAllBikes = async (req: Request, res: Response) => {
 }
 const getSingleBike = async (req: Request, res: Response) => {
     try {
-        const { id } = req.params;
-        const result = await productService.getSingleBike(id);
+        const { productId } = req.params;
+        const result = await productService.getSingleBike(productId);
         res.json({
-            message: 'Single bike loaded successfully',
+            message: 'Bikes retrieved successfully',
             success: true,
             data: result,
         })
@@ -63,11 +61,11 @@ const getSingleBike = async (req: Request, res: Response) => {
 }
 const updateBike = async (req: Request, res: Response) => {
     try {
-        const { id } = req.params;
+        const { productId } = req.params;
         const { body } = req
-        const result = await productService.updateBike(id, body);
+        const result = await productService.updateBike(productId, body);
         res.json({
-            message: 'bike updated successfully',
+            message: 'Bike updated successfully',
             success: true,
             data: result,
         })
@@ -84,10 +82,10 @@ const updateBike = async (req: Request, res: Response) => {
 }
 const deleteBike = async (req: Request, res: Response) => {
     try {
-        const { id } = req.params;
-        const result = await productService.deleteBike(id);
+        const { productId } = req.params;
+        await productService.deleteBike(productId);
         res.json({
-            message: 'bike deleted successfully',
+            message: 'Bike deleted successfully',
             success: true,
             data: {},
         })
@@ -99,7 +97,6 @@ const deleteBike = async (req: Request, res: Response) => {
             data: err,
             stack: err.stack
         })
-        console.log(err);
     }
 }
 
