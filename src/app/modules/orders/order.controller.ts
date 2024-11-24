@@ -1,37 +1,13 @@
 import { Request, Response } from "express";
 import { orderService } from "./order.service";
-import Product from "../products/product.model";
-import mongoose from "mongoose";
 const createOrder = async (req: Request, res: Response) => {
     try {
         const payload = req.body
-        const product = await Product.aggregate([
-            { $match: { _id: new mongoose.Types.ObjectId(payload.product) } },
-            { $project: { quantity: 1, } }]);
-
-        if (product.length === 0) {
-            console.log('Product not found');
-            return null;
-        }
-        if (product[0].quantity === 0 || product[0].quantity < payload.quantity) {
-            await Product.findByIdAndUpdate(payload.product, {
-                inStock: false
-            })
-            return res.status(400).json({
-                message: `Insufficient stocks, We only have ${product[0].quantity} to sell`,
-                success: false,
-            })
-        }
-        await Product.findByIdAndUpdate(
-            payload.product,
-            { $inc: { quantity: -payload.quantity } },
-            { new: true }
-        );
-        const result = await orderService.createOrder(payload)
+        const order = await orderService.createOrder(payload)
         res.status(201).json({
             message: 'Order Pressed successfully',
             success: true,
-            data: result,
+            data: order,
         })
     }
     catch (err: any) {

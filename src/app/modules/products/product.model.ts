@@ -1,6 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-
-
 const productSchema = new Schema({
     name: {
         type: String,
@@ -17,12 +15,12 @@ const productSchema = new Schema({
     price: {
         type: Number,
         required: true,
-        min: 0
+        min: 1
     },
     category: {
         type: String,
         enum: {values:[' Mountain', 'Road', 'Hybrid', 'Electric'],message:`{VALUE} is not a valid categoy! please provide valid one`},
-        required: true,
+        required: [true, 'Validation error'],
         trim: true
     },
     description: {
@@ -32,7 +30,7 @@ const productSchema = new Schema({
     quantity: {
         type: Number,
         required: [true, 'Quantity is Requred'],
-        min: [0, 'Min cannot be a negeive value']
+        min: [1, 'Min cannot be a negeive value']
     },
     inStock: {
         type: Boolean,
